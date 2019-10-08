@@ -22,4 +22,5 @@ Route.get('/', () => {
 
 Route.post('users', 'UserController.store');
 Route.post('session', 'SessionController.store');
-Route.post('forgot', 'ForgotPasswordController.store');
+Route.post('forgotPassword', 'ForgotPasswordController.store');
+Route.put('newPassword', 'ForgotPasswordController.update');
