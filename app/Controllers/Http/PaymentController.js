@@ -52,33 +52,6 @@ class PaymentController {
       }
     });
   }
-  success({ request, response }) {
-    let { paymentId, PayerID } = request.all();
-    var execute_payment_json = {
-      payer_id: PayerID,
-      transactions: [
-        {
-          amount: {
-            currency: 'BRL',
-            total: '49.90'
-          }
-        }
-      ]
-    };
-    paypal.payment.execute(paymentId, execute_payment_json, function(
-      error,
-      payment
-    ) {
-      if (error) {
-        console.log(error.response);
-        throw error;
-      } else {
-        console.log('Get Payment Response');
-        console.log(JSON.stringify(payment));
-        response.send('Success');
-      }
-    });
-  }
 }
 
 module.exports = PaymentController;
