@@ -67,7 +67,6 @@ class ForgotPasswordController {
       user.save();
       return response.send(
         { message: "Senha alterada com sucesso;",
-          token: user.token
       })
 
     } catch (err) {
