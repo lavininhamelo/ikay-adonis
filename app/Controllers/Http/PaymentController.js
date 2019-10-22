@@ -5,7 +5,7 @@ class PaymentController {
   constructor() {
     paypal.configure(paypalConfig);
   }
-  make({ request, response }) {
+  async make({ request, response }) {
     let product = request.body.product;
     var create_payment_json = {
       intent: 'sale',
@@ -38,7 +38,7 @@ class PaymentController {
       ]
     };
 
-    paypal.payment.create(create_payment_json, function(error, payment) {
+    await paypal.payment.create(create_payment_json, function(error, payment) {
       if (error) {
         throw error;
       } else {
@@ -46,11 +46,38 @@ class PaymentController {
         for (let i = 0; i < payment.links.length; i++) {
           if (payment.links[i].rel === 'approval_url') {
             console.log(payment.links[i].href);
-            response.redirect(payment.links[i].href);
+            return response.redirect(payment.links[i].href);
           }
         }
       }
     });
+  }
+  async success({ request, response }) {
+    let { paymentId, PayerID } = request.all();
+    var execute_payment_json = {
+      payer_id: PayerID,
+      transactions: [
+        {
+          amount: {
+            currency: 'BRL',
+            total: '49.90'
+          }
+        }
+      ]
+    };
+    return await paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function(error, payment) {
+        if (error) {
+          console.log(error.response);
+          throw error;
+        } else {
+          console.log('Get Payment Response');
+          console.log(JSON.stringify(payment));
+        }
+      }
+    );
   }
 }
 
