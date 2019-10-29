@@ -42,6 +42,7 @@ ORDER+PRODUCT{
 id,
 id_product(FK),
 id_order(FK)
+uses,
 }
 PACKAGE+ART{
 id,
