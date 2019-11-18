@@ -7,12 +7,12 @@ class ProductSchema extends Schema {
   up() {
     this.create('products', table => {
       table.increments();
-      table.timestamps();
       table.string('name', 255).notNullable();
       table.text('description');
-      table.decimal('price').notNullable();
+      table.decimal('original_price').notNullable();
       table.string('type', 32).notNullable();
-      table.boolean('published').notNullable();
+      table.boolean('status').notNullable();
+      table.timestamps();
     });
   }
 

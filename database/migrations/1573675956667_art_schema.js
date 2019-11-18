@@ -11,7 +11,7 @@ class ArtSchema extends Schema {
       table
         .integer('product_id')
         .unsigned()
-        .notNullable()
+        .unique()
         .references('id')
         .inTable('products')
         .onUpdate('CASCADE')

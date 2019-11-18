@@ -22,8 +22,9 @@ class OrderProductSchema extends Schema {
         .inTable('orders')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
+
       table.integer('qntd').defaultTo(1);
-      table.numeric('price');
+      table.decimal('current_price');
       table.increments();
       table.timestamps();
     });
