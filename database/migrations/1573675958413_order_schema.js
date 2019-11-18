@@ -16,10 +16,8 @@ class OrderSchema extends Schema {
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
 
-      table.decimal('totalPrice').notNullable;
       table.text('observation');
       table.string('status', 255).notNullable;
-      table.timestamps();
     });
   }
 }
