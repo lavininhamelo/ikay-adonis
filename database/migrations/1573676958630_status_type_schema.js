@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema');
+const Schema = use("Schema");
 
 class StatusTypeSchema extends Schema {
   up() {
-    this.create('status_types', table => {
+    this.create("status_types", table => {
       table.increments();
       table
-        .string('name')
+        .string("name")
         .notNullable()
         .unique();
       table.timestamps();
@@ -16,7 +16,7 @@ class StatusTypeSchema extends Schema {
   }
 
   down() {
-    this.drop('status_types');
+    this.drop("status_types");
   }
 }
 
