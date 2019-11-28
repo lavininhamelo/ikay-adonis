@@ -1,4 +1,5 @@
-'use strict'
+"use strict";
+const Art = use("App/Models/Art");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -17,7 +18,9 @@ class ArtController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index({ request, response, view }) {
+    const arts = Art.all();
+    return arts;
   }
 
   /**
@@ -29,7 +32,10 @@ class ArtController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create({ request, response, view }) {
+    const data = request.only(["product_id", "category"]);
+    const art = await Art.create(data);
+    return art;
   }
 
   /**
@@ -40,8 +46,7 @@ class ArtController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
-  }
+  async store({ request, response }) {}
 
   /**
    * Display a single art.
@@ -52,8 +57,7 @@ class ArtController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show({ params, request, response, view }) {}
 
   /**
    * Render a form to update an existing art.
@@ -64,8 +68,7 @@ class ArtController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
-  }
+  async edit({ params, request, response, view }) {}
 
   /**
    * Update art details.
@@ -75,8 +78,7 @@ class ArtController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-  }
+  async update({ params, request, response }) {}
 
   /**
    * Delete a art with id.
@@ -86,8 +88,7 @@ class ArtController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-  }
+  async destroy({ params, request, response }) {}
 }
 
-module.exports = ArtController
+module.exports = ArtController;
