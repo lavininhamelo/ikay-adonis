@@ -1,4 +1,5 @@
 "use strict";
+const Product = use("App/Models/Product");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -15,7 +16,16 @@ class ProductController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async index({ request, response }) {}
+  async index({ request, response }) {
+    const products = await Product.query()
+      .with("arts")
+      .fetch();
+
+    if (products.length === 0) {
+      return "No products is avaliable";
+    }
+    return products;
+  }
 
   /**
    * Render a form to be used for creating a new product.
@@ -36,7 +46,17 @@ class ProductController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) {
+    const data = request.only([
+      "name",
+      "description",
+      "original_price",
+      "type",
+      "status"
+    ]);
+    const product = Product.create(data);
+    return product;
+  }
 
   /**
    * Display a single product.
@@ -47,7 +67,12 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response }) {}
+  async show({ params, request, response }) {
+    const product = await Product.query()
+      .has("arts")
+      .fetch();
+    return product;
+  }
 
   /**
    * Render a form to update an existing product.

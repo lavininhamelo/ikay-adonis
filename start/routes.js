@@ -28,3 +28,12 @@ Route.put("newPassword", "ForgotPasswordController.update");
 
 //Order routes
 Route.get("orders", "OrderController.index");
+
+//Product routes
+Route.get("products", "ProductController.index");
+Route.get("products/:id", "ProductController.show");
+Route.post("products", "ProductController.store");
+
+//Art routes
+Route.get("arts", "ArtController.index");
+Route.post("arts", "ArtController.store");
