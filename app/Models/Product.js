@@ -1,18 +1,18 @@
-'use strict';
+"use strict";
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model');
+const Model = use("Model");
 
 class Product extends Model {
   arts() {
-    return this.hasOne('App/Models/Art', 'id', 'product_id');
+    return this.hasOne("App/Models/Art", "id", "product_id");
   }
   order() {
     return this.belongsToMany(
-      'App/Model/order',
-      'product_order',
-      'product_id',
-      'order_id'
+      "App/Models/Order",
+      "product_order",
+      "product_id",
+      "order_id"
     );
   }
 }

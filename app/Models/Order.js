@@ -5,18 +5,16 @@ const Model = use("Model");
 
 class Order extends Model {
   users() {
-    return this.belongsToMany("App/Models/User");
+    return this.belongsTo("App/Models/User");
   }
-  product() {
-    return this.belongsToMany(
-      "App/Model/Product",
-      "product_order",
-      "order_id",
-      "product_id"
-    );
+  products() {
+    return this.belongsToMany("App/Models/Product");
   }
   status() {
-    return this.hasOne("App/Models/OrderStatus");
+    return this.hasOne("App/Models/OrderStatus", "status_id", "id");
+  }
+  static get hidden() {
+    return ["status_id", "user_id"];
   }
 }
 
