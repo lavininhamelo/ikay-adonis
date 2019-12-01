@@ -12,13 +12,14 @@ class AlterOrderSchema extends Schema {
         .references("id")
         .inTable("order_status")
         .onUpdate("CASCADE")
-        .onDelete("CASCADE");
+        .onDelete("CASCADE")
+        .defaultTo(1);
     });
   }
 
   down() {
     this.alter("orders", table => {
-      table.dropColumn("status");
+      table.dropForeign("status_id");
     });
   }
 }

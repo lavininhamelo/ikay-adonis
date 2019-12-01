@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Order = use("App/Models/Order");
+const Product = use("App/Models/Product");
+const OrderProduct = use("App/Models/OrderProduct");
 const User = use("App/Models/User");
 
 /**
@@ -23,23 +25,11 @@ class OrderController {
     const orders = await Order.query()
       .with("users")
       .with("status")
-      .with("products")
-
+      .with("products.arts")
       .fetch();
 
     return orders;
   }
-
-  /**
-   * Render a form to be used for creating a new order.
-   * GET orders/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create({ request, response, view }) {}
 
   /**
    * Create/save a new order.
@@ -49,7 +39,38 @@ class OrderController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response, auth }) {
+    const { id } = await auth.getUser();
+    const data = request.only([
+      "status_id",
+      "observation",
+      "products",
+      "order_number"
+    ]);
+
+    try {
+      const order = await Order.create({
+        user_id: id,
+        status_id: data.status_id,
+        observation: data.observation,
+        order_number: data.order_number
+      });
+
+      for (var i = 0; i < data.products.length; i++) {
+        await order.products().attach(data.products[i].id, row => {
+          row.qntd = data.products[i].qntd;
+          row.current_price = data.products[i].current_price;
+        });
+      }
+
+      await order.load("products");
+
+      return order;
+    } catch (e) {
+      // return response.status(501).send("Não foi possivel realizar a compra!");
+      return e;
+    }
+  }
 
   /**
    * Display a single order.
@@ -60,7 +81,13 @@ class OrderController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response }) {
+    const orders = await Order.query()
+      .with("products")
+      .where("order_number", params.order_number)
+      .fetch();
+    return orders;
+  }
 
   /**
    * Render a form to update an existing order.
@@ -71,7 +98,7 @@ class OrderController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response }) {}
 
   /**
    * Update order details.

@@ -28,6 +28,8 @@ Route.put("newPassword", "ForgotPasswordController.update");
 
 //Order routes
 Route.get("orders", "OrderController.index");
+Route.post("orders", "OrderController.store").middleware("auth");
+Route.get("orders/:order_number", "OrderController.show");
 
 //Product routes
 Route.get("products", "ProductController.index");

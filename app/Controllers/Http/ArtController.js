@@ -57,6 +57,7 @@ class ArtController {
       "original_price",
       "type",
       "status",
+      "product_number",
       "category"
     ]);
 
@@ -66,6 +67,7 @@ class ArtController {
       description: data.description,
       original_price: data.original_price,
       type: data.type,
+      product_number: data.product_number,
       status: data.status
     });
 
