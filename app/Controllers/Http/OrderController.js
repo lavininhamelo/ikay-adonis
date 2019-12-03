@@ -49,13 +49,23 @@ class OrderController {
     ]);
 
     try {
+      var total_value = 0;
+
+      // Percorrer produtos e somar valores
+      for (const value of data.products) {
+        total_value += value.current_price;
+      }
+
+      // Criar ordem de compra
       const order = await Order.create({
         user_id: id,
         status_id: data.status_id,
         observation: data.observation,
-        order_number: data.order_number
+        order_number: data.order_number,
+        total: total_value
       });
 
+      // Relacionar ordem de compra com produtos
       for (var i = 0; i < data.products.length; i++) {
         await order.products().attach(data.products[i].id, row => {
           row.qntd = data.products[i].qntd;

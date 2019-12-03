@@ -30,6 +30,7 @@ Route.put("newPassword", "ForgotPasswordController.update");
 Route.get("orders", "OrderController.index");
 Route.post("orders", "OrderController.store").middleware("auth");
 Route.get("orders/:order_number", "OrderController.show");
+Route.delete("orders/:id", "OrderController.destroy");
 
 //Product routes
 Route.get("products", "ProductController.index");
@@ -38,4 +39,6 @@ Route.post("products", "ProductController.store");
 
 //Art routes
 Route.get("arts", "ArtController.index");
+Route.get("arts/:product_number", "ArtController.show");
 Route.post("arts", "ArtController.store");
+Route.delete("arts/:id", "ArtController.destroy");

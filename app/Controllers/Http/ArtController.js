@@ -84,15 +84,25 @@ class ArtController {
 
   /**
    * Display a single art.
-   * GET arts/:id
+   * GET arts/:product_number
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response }) {
+    const arts = await Product.query()
+      .with("arts")
+      .where("product_number", params.product_number)
+      .fetch();
 
+    if (arts.rows.length == 0) {
+      return response.status(204).send({
+        message: `Product(${params.product_number}) does not exists.`
+      });
+    }
+    return arts;
+  }
   /**
    * Render a form to update an existing art.
    * GET arts/:id/edit
@@ -122,7 +132,11 @@ class ArtController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    const product = await Product.findOrFail(params.id);
+    product.delete();
+    response.status(204).send({ message: "Deletada com sucesso!" });
+  }
 }
 
 module.exports = ArtController;
