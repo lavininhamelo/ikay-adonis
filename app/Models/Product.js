@@ -15,6 +15,14 @@ class Product extends Model {
       "order_id"
     );
   }
+  purchases() {
+    return this.belongsToMany(
+      "App/Models/User",
+      "purchases",
+      "product_id",
+      "user_id"
+    );
+  }
 }
 
 module.exports = Product;

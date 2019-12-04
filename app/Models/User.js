@@ -38,12 +38,19 @@ class User extends Model {
     return this.hasMany("App/Models/Order");
   }
 
+  purchases() {
+    return this.hasMany("App/Models/Product");
+  }
+
   static get computed() {
     return ["fullname"];
   }
 
   getFullname({ name, lastname }) {
     return `${name} ${lastname}`;
+  }
+  purchases() {
+    return this.belongsTo("App/Models/Order");
   }
 }
 

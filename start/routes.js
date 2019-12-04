@@ -42,3 +42,6 @@ Route.get("arts", "ArtController.index");
 Route.get("arts/:product_number", "ArtController.show");
 Route.post("arts", "ArtController.store");
 Route.delete("arts/:id", "ArtController.destroy");
+
+//Purchase routes
+Route.get("purchases/:order_id", "PurchaseController.store");
