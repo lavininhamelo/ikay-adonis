@@ -31,6 +31,7 @@ Route.get("orders", "OrderController.index");
 Route.post("orders", "OrderController.store").middleware("auth");
 Route.get("orders/:order_number", "OrderController.show");
 Route.delete("orders/:id", "OrderController.destroy");
+Route.patch("orders/:id", "OrderController.update");
 
 //Product routes
 Route.get("products", "ProductController.index");

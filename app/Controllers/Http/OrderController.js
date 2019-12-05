@@ -118,7 +118,18 @@ class OrderController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const order = await Order.findOrFail(params.id);
+
+    const { status_id } = request.only(["status_id"]);
+    await order.merge({ status_id });
+    await order.load("status");
+    await order.load("products");
+    await order.load("users");
+    await order.save();
+
+    return order;
+  }
 
   /**
    * Delete a order with id.

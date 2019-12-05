@@ -24,10 +24,6 @@ class ArtController {
     const arts = await Art.query()
       .with("products")
       .fetch();
-
-    if (arts.length === 0) {
-      return "No arts is avaliable";
-    }
     return arts;
   }
 

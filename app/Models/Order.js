@@ -4,6 +4,10 @@
 const Model = use("Model");
 
 class Order extends Model {
+  static boot() {
+    super.boot();
+    this.addHook("afterUpdate", "OrderHook.statusChanged");
+  }
   users() {
     return this.belongsTo("App/Models/User");
   }
