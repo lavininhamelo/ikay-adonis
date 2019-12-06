@@ -15,7 +15,7 @@ class Product extends Model {
       "order_id"
     );
   }
-  purchase() {
+  user() {
     return this.belongsToMany(
       "App/Models/User",
       "purchases",

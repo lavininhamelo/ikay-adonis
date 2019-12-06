@@ -64,10 +64,10 @@ class PurchaseController {
   async show({ params, request, response, auth }) {
     const { id } = await auth.getUser();
 
-    // const purchases = await Database.from("purchases").where("user_id", id);
-    const purchases = await Product.query()
-      .with("purchase")
-      .fetch();
+    const purchases = await Database.table("purchases")
+      .innerJoin("products", "purchases.product_id", "products.id")
+      .where("user_id", id);
+
     return purchases;
   }
 

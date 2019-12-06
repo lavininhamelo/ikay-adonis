@@ -38,8 +38,8 @@ class User extends Model {
     return this.hasMany("App/Models/Order");
   }
 
-  purchases() {
-    return this.hasMany("App/Models/Product");
+  purchase() {
+    return this.hasMany("App/Models/Product", "product_id", "id");
   }
 
   static get computed() {
