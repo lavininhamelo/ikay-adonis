@@ -50,7 +50,7 @@ class User extends Model {
     return `${name} ${lastname}`;
   }
   purchases() {
-    return this.belongsTo("App/Models/Order");
+    return this.belongsTo("App/Models/Product");
   }
 }
 

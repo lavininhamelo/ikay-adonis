@@ -61,7 +61,15 @@ class PurchaseController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, auth }) {
+    const { id } = await auth.getUser();
+
+    // const purchases = await Database.from("purchases").where("user_id", id);
+    const purchases = await Product.query()
+      .with("purchase")
+      .fetch();
+    return purchases;
+  }
 
   /**
    * Render a form to update an existing purchase.
@@ -82,7 +90,20 @@ class PurchaseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const { user_id } = request.only(["user_id"]);
+    const purchase = await Purchase.findByOrFail({
+      product_id: params.id,
+      user_id
+    });
+
+    if (purchase.remaining_uses === 0) {
+      return response.status(400).send({ message: "Product is equal 0" });
+    }
+    purchase.remaining_uses -= 1;
+    purchase.save();
+    return purchase;
+  }
 
   /**
    * Delete a purchase with id.
