@@ -47,4 +47,6 @@ Route.delete("arts/:id", "ArtController.destroy");
 //Purchase routes
 Route.get("purchases/:order_id", "PurchaseController.store");
 Route.get("user/purchases", "PurchaseController.show").middleware("auth");
-Route.patch("purchases/use/:id", "PurchaseController.update");
+Route.patch("purchases/use/:id", "PurchaseController.update").middleware(
+  "auth"
+);

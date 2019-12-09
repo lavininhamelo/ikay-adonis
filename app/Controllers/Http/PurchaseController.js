@@ -91,10 +91,10 @@ class PurchaseController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response }) {
-    const { user_id } = request.only(["user_id"]);
+    const { id } = await auth.getUser();
     const purchase = await Purchase.findByOrFail({
       product_id: params.id,
-      user_id
+      user_id: id
     });
 
     if (purchase.remaining_uses === 0) {
