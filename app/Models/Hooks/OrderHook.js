@@ -17,7 +17,7 @@ OrderHook.statusChanged = async order => {
         })
         .fetch();
       const { qntd } = await order_product.toJSON()[0];
-      console.log();
+
       const purchase = await Purchase.create({
         user_id: id,
         product_id: data.id,
