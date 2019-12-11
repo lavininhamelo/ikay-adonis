@@ -25,6 +25,7 @@ Route.post("users", "UserController.store");
 Route.post("login", "SessionController.store");
 Route.post("forgotPassword", "ForgotPasswordController.store");
 Route.put("newPassword", "ForgotPasswordController.update");
+Route.get("user/orders", "UserController.orderHistory").middleware("auth");
 
 //Order routes
 Route.get("orders", "OrderController.index");
