@@ -51,3 +51,7 @@ Route.get("user/purchases", "PurchaseController.show").middleware("auth");
 Route.patch("purchases/use/:id", "PurchaseController.update").middleware(
   "auth"
 );
+
+//File Routes
+Route.post("/files", "FileController.store");
+Route.get("/files/:id", "FileController.show");
