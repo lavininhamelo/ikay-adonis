@@ -4,6 +4,9 @@
 const Model = use("Model");
 
 class Product extends Model {
+  productphotos() {
+    return this.hasMany("App/Models/ProductPhoto");
+  }
   arts() {
     return this.hasOne("App/Models/Art", "id", "product_id");
   }
