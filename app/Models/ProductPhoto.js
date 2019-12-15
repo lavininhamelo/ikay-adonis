@@ -10,6 +10,9 @@ class ProductPhoto extends Model {
   products() {
     return this.belongsTo("App/Models/Product");
   }
+  capa() {
+    return this.belongsTo("App/Models/Product");
+  }
 }
 
 module.exports = ProductPhoto;

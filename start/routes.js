@@ -38,7 +38,10 @@ Route.patch("orders/:id", "OrderController.update");
 Route.get("products", "ProductController.index");
 Route.get("products/:id", "ProductController.show");
 Route.post("products", "ProductController.store");
-
+Route.patch(
+  "products/:product_id/files/:product_photo_id",
+  "ProductController.setCapa"
+);
 //Art routes
 Route.get("arts", "ArtController.index");
 Route.get("arts/:product_number", "ArtController.show");
@@ -55,3 +58,6 @@ Route.patch("purchases/use/:id", "PurchaseController.update").middleware(
 //File Routes
 Route.post("/files", "FileController.store");
 Route.get("/files/:id", "FileController.show");
+
+//Product Photos
+Route.post("/products/:product_id/file/:id", "ProductPhotoController.store");

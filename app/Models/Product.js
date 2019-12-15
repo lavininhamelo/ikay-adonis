@@ -26,6 +26,9 @@ class Product extends Model {
       "user_id"
     );
   }
+  capa() {
+    return this.hasOne("App/Models/ProductPhoto");
+  }
 }
 
 module.exports = Product;
