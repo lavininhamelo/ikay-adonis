@@ -1,5 +1,6 @@
 "use strict";
 const Product = use("App/Models/Product");
+const ProductPhoto = use("App/Models/ProductPhoto");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -104,6 +105,29 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {}
+
+  async setCapa({ params, request, response }) {
+    const product = await Product.query()
+      .where({ id: params.product_id })
+      .fetch();
+
+    if (product.toJSON().length > 0) {
+      await Product.query()
+        .where({
+          id: params.product_id
+        })
+        .update({
+          capa: params.product_photo_id
+        });
+      return Product.query()
+        .where({ id: params.product_id })
+        .fetch();
+    }
+
+    return response
+      .status(400)
+      .send({ mesage: "No product exists for set capa." });
+  }
 }
 
 module.exports = ProductController;
