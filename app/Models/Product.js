@@ -4,6 +4,9 @@
 const Model = use("Model");
 
 class Product extends Model {
+  productphotos() {
+    return this.hasMany("App/Models/ProductPhoto");
+  }
   arts() {
     return this.hasOne("App/Models/Art", "id", "product_id");
   }
@@ -22,6 +25,9 @@ class Product extends Model {
       "product_id",
       "user_id"
     );
+  }
+  capa() {
+    return this.hasOne("App/Models/ProductPhoto");
   }
 }
 
