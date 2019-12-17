@@ -109,11 +109,24 @@ class ProductController {
   async setCapa({ params, request, response }) {
     const product = await Product.query()
       .where({ id: params.product_id })
-      .update({
-        capa: params.product_photo_id
-      });
+      .fetch();
 
-    return product;
+    if (product.toJSON().length > 0) {
+      await Product.query()
+        .where({
+          id: params.product_id
+        })
+        .update({
+          capa: params.product_photo_id
+        });
+      return Product.query()
+        .where({ id: params.product_id })
+        .fetch();
+    }
+
+    return response
+      .status(400)
+      .send({ mesage: "No product exists for set capa." });
   }
 }
 

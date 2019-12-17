@@ -19,7 +19,6 @@ class ProductPhotoController {
 
     return product_photo;
   }
-  async setCapa({ params, request, response }) {}
 }
 
 module.exports = ProductPhotoController;
